@@ -23,8 +23,9 @@ public class CustomEntityExceptionHandler  {
         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 
     }
-    @ExceptionHandler(NullPointerException.class)
-    public final ResponseEntity<ResponseException> handAllExceptio
+    @ExceptionHandler(ResourceNotFoundException.class)
+
+    public final ResponseEntity<ResponseException> handleNotFoundException
             (Exception  ex, WebRequest request) {
 
         ResponseException response = new ResponseException

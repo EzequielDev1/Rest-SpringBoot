@@ -16,7 +16,7 @@ public class PersonController {
 
     //  Buscar por ID
     @GetMapping("/{id}")
-    public Person findById(@PathVariable String id){
+    public Person findById(@PathVariable Long id){
         return service.findById(id);
     }
 
@@ -34,13 +34,13 @@ public class PersonController {
 
     //  Deletar
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id){
+    public void delete(@PathVariable Long id){
         service.Delete(id);
     }
 
     //  Atualizar
     @PutMapping("/{id}")
-    public Person update(@PathVariable String id, @RequestBody Person person){
+    public Person update(@PathVariable Long id, @RequestBody Person person){
         return service.Update(person, id);
     }
 }

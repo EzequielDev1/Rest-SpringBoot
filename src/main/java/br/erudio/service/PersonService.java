@@ -1,6 +1,9 @@
 package br.erudio.service;
 
+import br.erudio.Repository.PersonRepository;
+import br.erudio.exception.hadler.ResourceNotFoundException;
 import br.erudio.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,55 +18,56 @@ public class PersonService {
     private final Logger logger = Logger.getLogger(PersonService.class.getName());
     private List<Person> people = new ArrayList<>();
 
+    @Autowired
+    PersonRepository repository;
 
-    // 🔍 Buscar por ID
-    public Person findById(String id){
-        logger.info("Finding one Person");
-
-        return people.stream()
-                .filter(p -> p.getId().equals(Long.parseLong(id))) // Ele Filtra, só deixa passar igual o id
-                .findFirst() // Pega o primeiro resultado encontrado
-                .orElse(null);
-
-
-    }
 
     // 📤 Listar todos
     public List<Person> findAll(){
         logger.info("Finding all Persons");
-        return people;
+
+        return repository.findAll();
+
     }
 
+    // 🔍 Buscar por ID
+    public Person findById(Long id){
+        logger.info("Finding one Person");
+
+        return repository.findById(id).orElseThrow(() -> new
+                ResourceNotFoundException("No record Id"));
+
+
+    }
     // 📥 Criar
     public Person create(Person person){
         logger.info("Creating one Person");
 
-        person.setId(counter.incrementAndGet());
-        people.add(person);
-
-        return person;
+        return repository.save(person);
     }
 
     // ✏️ Atualizar
-    public Person Update(Person person, String id){
+    public Person Update(Person person, Long id){
         logger.info("Updating one Person");
 
-        Person existing = findById(id);
+        Person entity =  repository.findById(id).orElseThrow(() -> new
+                ResourceNotFoundException("No record Id"));
 
-        if(existing != null){
-            existing.setFirstName(person.getFirstName());
-            existing.setLastName(person.getLastName());
-            existing.setGender(person.getGender());
-            existing.setAddress(person.getAddress());
-        }
+        entity.setFirstName(person.getFirstName());
+        entity.setLastName(person.getLastName());
+        entity.setAddress(person.getAddress());
+        entity.setGender(person.getGender());
 
-        return existing;
+       return repository.save(entity);
     }
 
     // 🗑️ Deletar
-    public void Delete(String id){
+    public void Delete(Long id){
         logger.info("Deleting one Person");
 
-        people.removeIf(p -> p.getId().equals(Long.parseLong(id)));
+      Person entity =  repository.findById(id).orElseThrow(() -> new
+                ResourceNotFoundException("No record Id"));
+
+      repository.delete(entity);
     }
 }
