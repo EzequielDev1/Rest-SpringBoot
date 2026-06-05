@@ -1,6 +1,6 @@
 package br.erudio.controllers;
 
-import br.erudio.model.Person;
+import br.erudio.dto.PersonDto;
 import br.erudio.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/PersonDto")
 public class PersonController {
 
     @Autowired
@@ -16,19 +16,19 @@ public class PersonController {
 
     //  Buscar por ID
     @GetMapping("/{id}")
-    public Person findById(@PathVariable Long id){
+    public PersonDto findById(@PathVariable Long id){
         return service.findById(id);
     }
 
     // Criar
     @PostMapping
-    public Person create(@RequestBody Person person){
-        return service.create(person);
+    public PersonDto create(@RequestBody PersonDto PersonDto){
+        return service.create(PersonDto);
     }
 
     //  Listar todos
     @GetMapping
-    public List<Person> findAll(){
+    public List<PersonDto> findAll(){
         return service.findAll();
     }
 
@@ -40,7 +40,7 @@ public class PersonController {
 
     //  Atualizar
     @PutMapping("/{id}")
-    public Person update(@PathVariable Long id, @RequestBody Person person){
-        return service.Update(person, id);
+    public PersonDto update(@PathVariable Long id, @RequestBody PersonDto personDto){
+        return service.Update(personDto, id);
     }
 }
