@@ -1,16 +1,14 @@
-package br.erudio.dto;
+package br.erudio.data.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -18,7 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class PersonDto implements Serializable {
+public class PersonDtoV1 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

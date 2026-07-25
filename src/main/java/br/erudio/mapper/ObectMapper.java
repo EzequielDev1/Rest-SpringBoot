@@ -8,19 +8,25 @@ import java.util.List;
 
 public class ObectMapper {
 
+    // Ele vai mapear o objecto Person -> DTO,e e vice versa.
+
     private static Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 
-    public static <O, D> D parseObejct(O origin, Class<D> destination ){
-      return   mapper.map(origin, destination);
+    public static <O, D> D parseObejct(O origin, Class<D> destination){
+        return mapper.map(origin, destination);
+
     }
 
-    public static <O, D> List<D> parseListObejct(List<O> origin, Class<D> destination) {
-        List<D> Destination = new ArrayList<>();
 
-        for (O o : origin) {
-            DO.add(mapper.map(o, destination));
+    public static <O, D> List<D> parseListObejct(List<O> origin, Class<D> destination){
+
+        List<D> destinationObject = new ArrayList<>();
+
+        for(Object o : origin){
+            destinationObject.add( mapper.map(origin, destination));
         }
+        return destinationObject;
 
-        return DO;
     }
+
 }

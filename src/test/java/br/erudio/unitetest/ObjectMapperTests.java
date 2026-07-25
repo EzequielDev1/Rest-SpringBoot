@@ -1,6 +1,6 @@
 package br.erudio.unitetest;
 
-import br.erudio.dto.PersonDto;
+import br.erudio.data.dto.v1.PersonDtoV1;
 import br.erudio.unitetest.mocks.MockPerson;
 import br.erudio.model.Person;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ public class ObjectMapperTests {
 
     @Test
     public void parseEntityToDTOTest() {
-        PersonDto output = parseObejct(inputObject.mockEntity(), PersonDto.class);
+        PersonDtoV1 output = parseObejct(inputObject.mockEntity(), PersonDtoV1.class);
         assertEquals(Long.valueOf(0L), output.getId());
         assertEquals("First Name Test0", output.getFirstName());
         assertEquals("Last Name Test0", output.getLastName());
@@ -32,8 +32,8 @@ public class ObjectMapperTests {
 
     @Test
     public void parseEntityListToDTOListTest() {
-        List<PersonDto> outputList = parseListObejct(inputObject.mockEntityList(), PersonDto.class);
-        PersonDto outputZero = outputList.get(0);
+        List<PersonDtoV1> outputList = parseListObejct(inputObject.mockEntityList(), PersonDtoV1.class);
+        PersonDtoV1 outputZero = outputList.get(0);
 
         assertEquals(Long.valueOf(0L), outputZero.getId());
         assertEquals("First Name Test0", outputZero.getFirstName());
@@ -41,7 +41,7 @@ public class ObjectMapperTests {
         assertEquals("Address Test0", outputZero.getAddress());
         assertEquals("Male", outputZero.getGender());
 
-        PersonDto outputSeven = outputList.get(7);
+        PersonDtoV1 outputSeven = outputList.get(7);
 
         assertEquals(Long.valueOf(7L), outputSeven.getId());
         assertEquals("First Name Test7", outputSeven.getFirstName());
@@ -49,7 +49,7 @@ public class ObjectMapperTests {
         assertEquals("Address Test7", outputSeven.getAddress());
         assertEquals("Female", outputSeven.getGender());
 
-        PersonDto outputTwelve = outputList.get(12);
+        PersonDtoV1 outputTwelve = outputList.get(12);
 
         assertEquals(Long.valueOf(12L), outputTwelve.getId());
         assertEquals("First Name Test12", outputTwelve.getFirstName());

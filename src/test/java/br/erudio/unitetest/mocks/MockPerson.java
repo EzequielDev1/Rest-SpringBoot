@@ -3,7 +3,7 @@ package br.erudio.unitetest.mocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.erudio.dto.PersonDto;
+import br.erudio.data.dto.v1.PersonDtoV1;
 import br.erudio.model.Person;
 
 public class MockPerson {
@@ -13,7 +13,7 @@ public class MockPerson {
         return mockEntity(0);
     }
     
-    public PersonDto mockDTO() {
+    public PersonDtoV1 mockDTO() {
         return mockDTO(0);
     }
     
@@ -25,8 +25,8 @@ public class MockPerson {
         return persons;
     }
 
-    public List<PersonDto> mockDTOList() {
-        List<PersonDto> persons = new ArrayList<>();
+    public List<PersonDtoV1> mockDTOList() {
+        List<PersonDtoV1> persons = new ArrayList<>();
         for (int i = 0; i < 14; i++) {
             persons.add(mockDTO(i));
         }
@@ -43,8 +43,8 @@ public class MockPerson {
         return person;
     }
 
-    public PersonDto mockDTO(Integer number) {
-        PersonDto person = new PersonDto();
+    public PersonDtoV1 mockDTO(Integer number) {
+        PersonDtoV1 person = new PersonDtoV1();
         person.setAddress("Address Test" + number);
         person.setFirstName("First Name Test" + number);
         person.setGender(((number % 2)==0) ? "Male" : "Female");

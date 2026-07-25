@@ -1,9 +1,11 @@
 package br.erudio.service;
 
 import br.erudio.Repository.PersonRepository;
-import br.erudio.dto.PersonDto;
+import br.erudio.data.dto.v1.PersonDtoV1;
+import br.erudio.data.dto.v2.PersonDtoV2;
 import br.erudio.exception.hadler.ResourceNotFoundException;
 import br.erudio.mapper.ObectMapper;
+import br.erudio.mapper.custom.PersonMapper;
 import br.erudio.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,37 +27,46 @@ public class PersonService {
     @Autowired
     PersonRepository repository;
 
+    @Autowired
+    PersonMapper personMapper;
 
     // 📤 Listar todos
-    public List<PersonDto> findAll(){
+    public List<PersonDtoV1> findAll(){
         logger.info("Finding all PersonDtos");
 
 
-        return ObectMapper.parseListObejct(repository.findAll(), PersonDto.class);
+        return ObectMapper.parseListObejct(repository.findAll(), PersonDtoV1.class);
 
     }
 
     // 🔍 Buscar por ID
-    public PersonDto findById(Long id){
+    public PersonDtoV1 findById(Long id){
         logger.info("Finding one PersonDto");
 
         var entity = repository.findById(id).orElseThrow(() -> new
                 ResourceNotFoundException("No record Id"));
 
-       return parseObejct(entity, PersonDto.class);
+       return parseObejct(entity, PersonDtoV1.class);
     }
 
-    // 📥 Criar
-    public PersonDto create(PersonDto person) {
+    // V1
+    public PersonDtoV1 createV2(PersonDtoV1 person) {
         logger.info("Creating one PersonDto");
 
         var entity = parseObejct(person, Person.class);
 
-        return parseObejct(repository.save(entity), PersonDto.class); // ✅ adicionado segundo argumento
+        return parseObejct(repository.save(entity), PersonDtoV1.class); // ✅ adicionado segundo argumento
     }
 
+    //V2
+  /*  public  PersonDtoV2 createV2(PersonDtoV2 person){
+
+        var entity = personMapper.convertEntityDTO(person);
+
+        return personMapper.convertEntityDTO(repository.save(entity);
+    }*/
     // ✏️ Atualizar
-    public PersonDto Update(PersonDto person, Long id) {
+    public PersonDtoV1 Update(PersonDtoV1 person, Long id) {
         logger.info("Updating one PersonDto");
 
         Person entity = repository.findById(person.getId()) // ✅ tipo correto: Person
@@ -66,14 +77,14 @@ public class PersonService {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return parseObejct(repository.save(entity), PersonDto.class);
-    }
+            return parseObejct(repository.save(entity), PersonDtoV1.class);
+        }
 
     // 🗑️ Deletar
     public void Delete(Long id) {
         logger.info("Deleting one PersonDto");
 
-        Person entity = repository.findById(id) // ✅ tipo correto: Person
+        Person entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No record Id"));
 
         repository.delete(entity);
